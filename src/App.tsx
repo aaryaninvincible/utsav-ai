@@ -8,9 +8,7 @@ import { EventDetailsPage } from './pages/EventDetailsPage';
 import { InspirationPage } from './pages/InspirationPage';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { ExportModal } from './components/ExportModal';
-import { FestiveMarqueeTicker } from './components/FestiveMarqueeTicker';
-import { FestiveCalendarModal } from './components/FestiveCalendarModal';
-import { FestiveBannerStudioModal } from './components/FestiveBannerStudioModal';
+import { AuthModal, UserProfile } from './components/AuthModal';
 import { EventData, EventCategory } from './types';
 import { 
   getEvents, 
@@ -19,13 +17,6 @@ import {
   deleteEvent as deleteEventStorage, 
   duplicateEvent as duplicateEventStorage 
 } from './services/storageService';
-import {
-  FestivalTheme,
-  getActiveFestivalTheme,
-  setFestivalTheme,
-  applyThemeVariables,
-} from './services/festivalThemeService';
-import { GeneratedBannerConcept } from './services/multiAgentRouter';
 
 type ViewMode = 'landing' | 'dashboard' | 'create' | 'details' | 'inspiration';
 
@@ -34,10 +25,9 @@ export const App: React.FC = () => {
   const [events, setEvents] = useState<EventData[]>([]);
   const [activeEvent, setActiveEvent] = useState<EventData | null>(null);
   
-  // Festive & Cultural Engine State
-  const [currentFestival, setCurrentFestival] = useState<FestivalTheme>(getActiveFestivalTheme());
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [isBannerStudioOpen, setIsBannerStudioOpen] = useState(false);
+  // Auth & User Profile State
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   // Modals
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
@@ -46,21 +36,24 @@ export const App: React.FC = () => {
 
   // Initial load
   useEffect(() => {
+    // Load events
     const loaded = getEvents();
     setEvents(loaded);
     if (loaded.length > 0 && !activeEvent) {
       setActiveEvent(loaded[0]);
     }
-    const detected = getActiveFestivalTheme();
-    setCurrentFestival(detected);
-    applyThemeVariables(detected);
-  }, []);
 
-  const handleFestivalChange = (newTheme: FestivalTheme) => {
-    setCurrentFestival(newTheme);
-    setFestivalTheme(newTheme.id);
-    applyThemeVariables(newTheme);
-  };
+    // Load user session if saved
+    try {
+      const savedUser = localStorage.getItem('utsav_user');
+      if (savedUser) {
+        setCurrentUser(JSON.parse(savedUser));
+      }
+    } catch {}
+
+    // Apply dark luxury theme as default (as shown in reference image)
+    document.documentElement.classList.add('dark');
+  }, []);
 
   const refreshEvents = () => {
     const loaded = getEvents();
@@ -90,7 +83,7 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleSelectEvent = (eventId: string, tab?: string) => {
+  const handleSelectEvent = (eventId: string) => {
     const ev = getEventById(eventId);
     if (ev) {
       setActiveEvent(ev);
@@ -130,7 +123,13 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handlePlanFestivalFromCalendar = (festivalName: string) => {
+  const handlePlanEventFromCalendar = (details: {
+    name: string;
+    date: string;
+    category: EventCategory;
+    guestCount?: number;
+    budget?: number;
+  }) => {
     setCurrentView('create');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -151,40 +150,51 @@ export const App: React.FC = () => {
     setIsAssistantOpen(true);
   };
 
+  const scrollToCalendar = () => {
+    if (currentView !== 'landing') {
+      setCurrentView('landing');
+      setTimeout(() => {
+        const el = document.getElementById('calendar-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const el = document.getElementById('calendar-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-bg text-ink flex flex-col font-sans selection:bg-maroon selection:text-on-primary">
+    <div className="min-h-screen bg-[#0D0709] text-white flex flex-col font-sans selection:bg-[#E5A855] selection:text-black">
       
-      {/* Universal Top Navigation with Liquid Glass & Festival Selector */}
+      {/* Luxury Navbar (Eventara Event Planner Style) */}
       <Navbar
         currentTab={currentView}
         onNavigate={handleNavigate}
-        activeEventName={activeEvent ? activeEvent.name : undefined}
-        onOpenAIAssistant={() => handleOpenAIWithPrompt()}
-        onOpenCalendar={() => setIsCalendarOpen(true)}
-        onOpenBannerStudio={() => setIsBannerStudioOpen(true)}
-        currentFestival={currentFestival}
-        onFestivalChange={handleFestivalChange}
-      />
-
-      {/* Live Festival Marquee Ticker */}
-      <FestiveMarqueeTicker
-        festival={currentFestival}
-        onOpenCalendar={() => setIsCalendarOpen(true)}
-        onExploreDiwali={() => handleNavigate('landing')}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenCalendar={scrollToCalendar}
+        onPlanYourEvent={() => {
+          setCurrentView('create');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        currentUser={currentUser}
+        onSignOut={() => {
+          setCurrentUser(null);
+          localStorage.removeItem('utsav_user');
+        }}
       />
 
       {/* Main Content Area */}
       <main className="flex-1">
         {currentView === 'landing' && (
           <LandingPage
-            onStartPlanning={(cat) => handleNavigate('create')}
+            onStartPlanning={(cat) => {
+              setCurrentView('create');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             onExploreDemo={(id) => handleSelectEvent(id || events[0]?.id || 'sample-wedding-1')}
             onOpenInspiration={() => handleNavigate('inspiration')}
-            onAskAI={(prompt) => handleOpenAIWithPrompt(prompt)}
-            onOpenCalendar={() => setIsCalendarOpen(true)}
-            onOpenBannerStudio={() => setIsBannerStudioOpen(true)}
-            currentFestival={currentFestival}
-            onFestivalChange={handleFestivalChange}
+            onOpenCalendar={scrollToCalendar}
+            onPlanEventFromCalendar={handlePlanEventFromCalendar}
             events={events}
           />
         )}
@@ -225,21 +235,11 @@ export const App: React.FC = () => {
       {/* Universal Footer */}
       <Footer />
 
-      {/* Indian Cultural & Festive Calendar Modal */}
-      <FestiveCalendarModal
-        isOpen={isCalendarOpen}
-        onClose={() => setIsCalendarOpen(false)}
-        onSelectFestivalForPlanning={handlePlanFestivalFromCalendar}
-      />
-
-      {/* AI Festive Banner Studio (Gemini & Multi-Model) */}
-      <FestiveBannerStudioModal
-        isOpen={isBannerStudioOpen}
-        onClose={() => setIsBannerStudioOpen(false)}
-        onApplyBannerToHero={(concept) => {
-          // Banner applied notification or action
-          setIsBannerStudioOpen(false);
-        }}
+      {/* Sign In / Sign Up Modal */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onSuccess={(user) => setCurrentUser(user)}
       />
 
       {/* Real-time Contextual AI Assistant Modal */}

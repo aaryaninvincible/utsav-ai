@@ -211,3 +211,4 @@ export function generateBannerConcept(
     modelUsed: modelTier,
   };
 }
+

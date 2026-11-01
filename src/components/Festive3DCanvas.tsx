@@ -320,3 +320,4 @@ export const Festive3DCanvas: React.FC<Festive3DCanvasProps> = ({
     </div>
   );
 };
+

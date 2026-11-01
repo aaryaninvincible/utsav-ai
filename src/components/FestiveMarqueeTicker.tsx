@@ -73,3 +73,4 @@ export const FestiveMarqueeTicker: React.FC<FestiveMarqueeTickerProps> = ({
     </div>
   );
 };
+

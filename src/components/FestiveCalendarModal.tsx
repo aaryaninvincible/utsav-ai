@@ -404,3 +404,4 @@ export const FestiveCalendarModal: React.FC<FestiveCalendarModalProps> = ({
     </div>
   );
 };
+
