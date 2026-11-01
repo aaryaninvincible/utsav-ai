@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utsav AI — Indian Festival & Celebration Planner | Diwali, Weddings & Poojas</title>
+    
+    <!-- Primary Meta Tags (SEO) -->
+    <meta name="title" content="Utsav AI — Indian Festival & Celebration Planner | Diwali, Weddings & Poojas" />
+    <meta name="description" content="India's premier AI celebration assistant. Plan Diwali 2026, Royal Indian Weddings, Navratri, Holi, and Birthdays with auspicious Vedic muhurat timings, deterministic INR budgets, 3D WebGL decor previews, and multi-model AI guidance." />
+    <meta name="keywords" content="Diwali 2026, Diwali decor, Lakshmi Puja muhurat, Indian wedding planner, Navratri garba planner, Vedic panchang calendar, catering menus INR, celebration AI, Gemini AI events, Three.js 3D diya, Utsav AI" />
+    <meta name="author" content="Utsav AI Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#7928CA" />
+    <link rel="canonical" href="https://utsav-ai.vercel.app/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://utsav-ai.vercel.app/" />
+    <meta property="og:title" content="Utsav AI — Indian Festival & Celebration Planner" />
+    <meta property="og:description" content="Plan Diwali, Royal Weddings & Community Poojas with auspicious Vedic muhurats, date-aware timelines, INR budgeting, and interactive 3D WebGL visualizers." />
+    <meta property="og:image" content="/assets/hero/diwali-banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Utsav AI" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://utsav-ai.vercel.app/" />
+    <meta property="twitter:title" content="Utsav AI — Indian Festival & Celebration Planner" />
+    <meta property="twitter:description" content="Plan Diwali, Royal Weddings & Cultural Festivities with AI. Vedic Muhurats, INR Budgets, and 3D WebGL visuals." />
+    <meta property="twitter:image" content="/assets/hero/diwali-banner.png" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (JSON-LD Schema.org for SEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://utsav-ai.vercel.app/#app",
+          "name": "Utsav AI",
+          "applicationCategory": "LifestyleApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          },
+          "description": "Intelligent Indian cultural event and festive planning platform featuring Vedic Muhurat timings, deterministic INR budgeting, and Three.js 3D decor visualizers."
+        },
+        {
+          "@type": "Event",
+          "@id": "https://utsav-ai.vercel.app/#diwali-2026",
+          "name": "Diwali Festival of Lights 2026",
+          "startDate": "2026-11-12T17:39:00+05:30",
+          "endDate": "2026-11-12T23:59:00+05:30",
+          "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "India & Global Indian Diaspora"
+          },
+          "description": "Grand celebration of Diwali with earthen diyas, Lakshmi-Ganesh puja, traditional sweets gifting, and festive lights."
+        }
+      ]
+    }
+    </script>
+
+    <script>
+      // Apply saved theme and festival variables before initial paint
+      try {
+        var t = localStorage.getItem('utsav_theme');
+        if (t === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+        var fest = localStorage.getItem('utsav_festival_theme') || 'diwali';
+        var festPrimary = {
+          diwali: '#7928CA',
+          navratri: '#D91B5C',
+          wedding: '#800020',
+          holi: '#E11D48',
+          eid: '#065F46',
+          newyear: '#1E293B'
+        }[fest] || '#7928CA';
+        document.documentElement.style.setProperty('--fest-primary', festPrimary);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <noscript>Utsav AI requires JavaScript enabled to plan your celebrations and view 3D festive visualizers.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
