@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Search,
-  User,
   ChevronDown,
   Calendar,
   Sparkles,
   Menu,
   X,
   LogOut,
-  Layers,
   ArrowRight,
 } from 'lucide-react';
 import { UserProfile } from './AuthModal';
@@ -37,17 +35,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#0D0709]/85 backdrop-blur-xl border-b border-white/10 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div className="sticky top-0 z-50 w-full pt-3 sm:pt-4 px-4 sm:px-6 pointer-events-none">
+      {/* Floating Capsule Container */}
+      <header className="max-w-6xl mx-auto rounded-full bg-[#160D12]/85 backdrop-blur-2xl border border-white/12 px-5 sm:px-7 py-2.5 flex items-center justify-between shadow-[0_12px_40px_rgba(0,0,0,0.65)] pointer-events-auto transition-all">
         
-        {/* Left: Brand Logo (Eventara / Utsav AI Style) */}
+        {/* Left: Brand Logo */}
         <button
           onClick={() => onNavigate('landing')}
-          className="flex items-center gap-3 group focus-visible:outline-none text-left"
+          className="flex items-center gap-2.5 group focus-visible:outline-none text-left"
           aria-label="Eventara Event Planner"
         >
-          {/* Gold Lotus Emblem */}
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#E5A855]/20 to-[#D97736]/10 border border-[#E5A855]/40 flex items-center justify-center text-[#E5A855] group-hover:scale-105 transition-transform shadow-[0_0_15px_rgba(229,168,85,0.2)]">
+          {/* Gold Lotus Icon */}
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#E5A855]/25 to-[#D97736]/10 border border-[#E5A855]/50 flex items-center justify-center text-[#E5A855] group-hover:scale-105 transition-transform shadow-[0_0_12px_rgba(229,168,85,0.3)]">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -55,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               strokeWidth="1.8"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="w-6 h-6"
+              className="w-5 h-5"
             >
               <path d="M12 3c1.5 2.5 1.5 5 0 8-1.5-3-1.5-5.5 0-8z" />
               <path d="M12 11c-2.5-3-6-4-9-3 1 3 3.5 5.5 9 3z" />
@@ -65,25 +64,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div>
-            <span className="font-serif text-2xl font-bold tracking-tight text-white block leading-none">
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-white block leading-none">
               Eventara
             </span>
-            <span className="text-[10px] tracking-[0.25em] uppercase font-medium text-[#E5A855] block mt-1">
+            <span className="text-[9px] tracking-[0.25em] uppercase font-medium text-[#E5A855] block mt-0.5">
               Event Planner
             </span>
           </div>
         </button>
 
-        {/* Center: Frosted Glass Navigation Pill (as in reference image) */}
+        {/* Center: Frosted Capsule Pill Links */}
         <nav
-          className="hidden md:flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#180E13]/80 border border-white/10 shadow-inner"
+          className="hidden md:flex items-center gap-1 px-3 py-1 rounded-full bg-[#1F1218]/70 border border-white/10"
           aria-label="Main Navigation"
         >
           <button
             onClick={() => onNavigate('landing')}
             className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
               currentTab === 'landing'
-                ? 'bg-[#3A1E27] text-white shadow-sm border border-white/10'
+                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
                 : 'text-white/70 hover:text-white'
             }`}
           >
@@ -94,10 +93,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative">
             <button
               onClick={() => setEventsDropdownOpen(!eventsDropdownOpen)}
-              className="flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white transition-colors"
+              className="flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white transition-colors"
             >
               <span>Events</span>
-              <ChevronDown className="w-3.5 h-3.5" />
+              <ChevronDown className="w-3.5 h-3.5 text-white/50" />
             </button>
 
             {eventsDropdownOpen && (
@@ -129,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }}
                   className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-white/90 hover:bg-white/10 flex items-center justify-between"
                 >
-                  <span>Corporate Galas</span>
+                  <span>Corporate Events</span>
                   <span className="text-[#E5A855]">💼</span>
                 </button>
                 <button
@@ -148,58 +147,57 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => onNavigate('dashboard')}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
               currentTab === 'dashboard'
-                ? 'bg-[#3A1E27] text-white shadow-sm border border-white/10'
+                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
                 : 'text-white/70 hover:text-white'
             }`}
           >
-            Dashboard
-          </button>
-
-          <button
-            onClick={onOpenCalendar}
-            className="px-4 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white flex items-center gap-1.5 transition-colors"
-          >
-            <Calendar className="w-3.5 h-3.5 text-[#E5A855]" />
-            <span>Calendar</span>
+            Services
           </button>
 
           <button
             onClick={() => onNavigate('inspiration')}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
               currentTab === 'inspiration'
-                ? 'bg-[#3A1E27] text-white shadow-sm border border-white/10'
+                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
                 : 'text-white/70 hover:text-white'
             }`}
           >
             Gallery
           </button>
-        </nav>
 
-        {/* Right: Search, Auth & Luxury "Plan Your Event" Button */}
-        <div className="flex items-center gap-3">
-          
-          {/* Circular Frosted Search Button */}
           <button
             onClick={onOpenCalendar}
-            className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
+            className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white transition-colors"
+          >
+            About
+          </button>
+        </nav>
+
+        {/* Right Action Cluster: Search + Sign In + Plan Your Event */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          
+          {/* Circular Search Pill */}
+          <button
+            onClick={onOpenCalendar}
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/80 hover:text-white transition-colors"
             aria-label="Search Occasions"
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-3.5 h-3.5" />
           </button>
 
-          {/* User Sign In / Profile Button */}
+          {/* User Sign In / Profile */}
           {currentUser ? (
             <div className="relative">
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-[#E5A855]/40 text-xs font-semibold text-white hover:bg-white/10 transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#D97736] to-[#E5A855] text-white text-[10px] font-bold flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#D97736] to-[#E5A855] text-white text-[9px] font-bold flex items-center justify-center">
                   {currentUser.name.charAt(0)}
                 </div>
-                <span className="hidden sm:inline">{currentUser.name}</span>
+                <span className="hidden sm:inline text-xs">{currentUser.name}</span>
                 <ChevronDown className="w-3 h-3 text-white/60" />
               </button>
 
@@ -234,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <button
               onClick={onOpenAuth}
-              className="px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-semibold text-white/90 hover:text-white transition-colors"
+              className="text-xs font-semibold text-white/90 hover:text-white px-3 py-1.5 transition-colors"
             >
               Sign In
             </button>
@@ -243,32 +241,32 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Primary "Plan Your Event →" Luxury Pill Button */}
           <button
             onClick={onPlanYourEvent}
-            className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-xs shadow-[0_0_20px_rgba(229,168,85,0.4)] hover:brightness-110 active:scale-95 transition-all"
+            className="flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-xs shadow-[0_0_20px_rgba(229,168,85,0.45)] hover:brightness-110 active:scale-95 transition-all"
           >
             <span>Plan Your Event</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white"
+            className="md:hidden p-1.5 rounded-full bg-white/5 border border-white/10 text-white"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#12080D] p-5 space-y-3 animate-fadeIn">
+        <div className="md:hidden mt-2 max-w-sm mx-auto rounded-3xl border border-white/15 bg-[#140B10]/95 backdrop-blur-2xl p-5 space-y-3 shadow-2xl pointer-events-auto animate-fadeIn">
           <button
             onClick={() => {
               onNavigate('landing');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left py-2 text-sm font-semibold text-white/80"
+            className="w-full text-left py-2 text-xs font-semibold text-white/80"
           >
             Home
           </button>
@@ -277,18 +275,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate('dashboard');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left py-2 text-sm font-semibold text-white/80"
+            className="w-full text-left py-2 text-xs font-semibold text-white/80"
           >
-            Dashboard
+            Services & Dashboard
           </button>
           <button
             onClick={() => {
               onOpenCalendar();
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left py-2 text-sm font-semibold text-[#E5A855] flex items-center gap-2"
+            className="w-full text-left py-2 text-xs font-semibold text-[#E5A855] flex items-center gap-2"
           >
-            <Calendar className="w-4 h-4" />
+            <Calendar className="w-3.5 h-3.5" />
             <span>Auspicious Calendar</span>
           </button>
           <button
@@ -296,9 +294,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate('inspiration');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left py-2 text-sm font-semibold text-white/80"
+            className="w-full text-left py-2 text-xs font-semibold text-white/80"
           >
-            Gallery & Themes
+            Gallery
           </button>
           {!currentUser && (
             <button
@@ -316,12 +314,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               onPlanYourEvent();
               setMobileMenuOpen(false);
             }}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-xs text-center block"
+            className="w-full py-2.5 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-xs text-center block"
           >
             Plan Your Event Now
           </button>
         </div>
       )}
-    </header>
+    </div>
   );
 };
