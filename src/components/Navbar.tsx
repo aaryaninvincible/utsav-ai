@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import {
   Search,
   ChevronDown,
@@ -33,6 +33,8 @@ interface NavbarProps {
   onToggleTheme?: () => void;
 }
 
+type NavItemKey = 'home' | 'events' | 'services' | 'gallery' | 'about';
+
 export const Navbar: React.FC<NavbarProps> = ({
   currentTab,
   onNavigate,
@@ -47,10 +49,71 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
+  const [landingAnchor, setLandingAnchor] = useState<'home' | 'events' | 'about'>('home');
+  const [hoveredKey, setHoveredKey] = useState<NavItemKey | null>(null);
+  const [pillStyle, setPillStyle] = useState<{ left: number; width: number; opacity: number }>({
+    left: 0,
+    width: 0,
+    opacity: 0,
+  });
+
+  const navRef = useRef<HTMLElement | null>(null);
+  const itemRefs = useRef<Record<NavItemKey, HTMLElement | null>>({
+    home: null,
+    events: null,
+    services: null,
+    gallery: null,
+    about: null,
+  });
 
   const isDark = theme === 'dark';
 
-  const scrollToSection = (sectionId: string) => {
+  // Determine which nav item is currently active based on route/tab & landing anchor
+  const activeKey: NavItemKey = (() => {
+    if (currentTab === 'services') return 'services';
+    if (currentTab === 'inspiration') return 'gallery';
+    if (currentTab === 'create' || currentTab === 'dashboard' || currentTab === 'details') {
+      return 'events';
+    }
+    return landingAnchor;
+  })();
+
+  // Reset landing anchor to 'home' when switching away from landing or clicking Home
+  useEffect(() => {
+    if (currentTab !== 'landing') {
+      setLandingAnchor('home');
+    }
+  }, [currentTab]);
+
+  const targetKey: NavItemKey = hoveredKey ?? activeKey;
+
+  const updatePillPosition = useCallback(() => {
+    const navEl = navRef.current;
+    const targetEl = itemRefs.current[targetKey];
+    if (!navEl || !targetEl) return;
+
+    const navRect = navEl.getBoundingClientRect();
+    const targetRect = targetEl.getBoundingClientRect();
+
+    setPillStyle({
+      left: targetRect.left - navRect.left,
+      width: targetRect.width,
+      opacity: 1,
+    });
+  }, [targetKey]);
+
+  useLayoutEffect(() => {
+    updatePillPosition();
+  }, [updatePillPosition, currentTab, theme]);
+
+  useEffect(() => {
+    const handleResize = () => updatePillPosition();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [updatePillPosition]);
+
+  const scrollToSection = (sectionId: string, anchorKey: 'home' | 'events' | 'about') => {
+    setLandingAnchor(anchorKey);
     if (currentTab !== 'landing') {
       onNavigate('landing');
       setTimeout(() => {
@@ -63,6 +126,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const getItemTextClass = (key: NavItemKey) => {
+    const isHighlighted = targetKey === key;
+    return isHighlighted
+      ? 'text-[#FFF8F2] dark:text-[#F7EEE9] font-medium'
+      : 'text-ink-2 hover:text-ink font-medium';
+  };
+
   return (
     <div className="sticky top-0 z-50 w-full pt-3 sm:pt-3.5 px-3 sm:px-6 lg:px-8 pointer-events-none">
       {/* Centered Floating Frosted Capsule Navbar (~1480px max-width, ~62px height) */}
@@ -72,6 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <button
           type="button"
           onClick={() => {
+            setLandingAnchor('home');
             onNavigate('landing');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
@@ -110,49 +181,78 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Center: Desktop Navigation Links (Home, Events v, Services, Gallery, About) */}
+        {/* Center: Desktop Navigation Links with Cursor-Following Sliding Capsule */}
         <nav
-          className="hidden lg:flex items-center gap-6 xl:gap-8"
+          ref={navRef}
+          onMouseLeave={() => {
+            setHoveredKey(null);
+            setEventsDropdownOpen(false);
+          }}
+          className="relative hidden lg:flex items-center gap-1.5 xl:gap-2 py-1"
           aria-label="Primary Navigation"
         >
-          {/* 1. Home (active capsule) */}
+          {/* Cursor-Following & Active-Tab Sliding Capsule Pill */}
+          <span
+            aria-hidden="true"
+            style={{
+              transform: `translate3d(${pillStyle.left}px, -50%, 0)`,
+              width: `${pillStyle.width}px`,
+              opacity: pillStyle.opacity,
+            }}
+            className="pointer-events-none absolute top-1/2 left-0 h-[36px] rounded-full bg-gradient-to-b from-[#571B32] to-[#3B1222] dark:from-[#49232E]/95 dark:to-[#2D151D]/98 border border-gold/55 shadow-[0_4px_16px_rgba(242,166,74,0.25),inset_0_1px_0_rgba(255,255,255,0.22)] transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] z-0"
+          />
+
+          {/* 1. Home */}
           <button
+            ref={(el) => {
+              itemRefs.current.home = el;
+            }}
             type="button"
+            onMouseEnter={() => {
+              setHoveredKey('home');
+              setEventsDropdownOpen(false);
+            }}
+            onFocus={() => setHoveredKey('home')}
+            onBlur={() => setHoveredKey(null)}
             onClick={() => {
+              setLandingAnchor('home');
               onNavigate('landing');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`px-5 py-1.5 rounded-full text-[13.5px] font-medium transition-all duration-200 ${
-              currentTab === 'landing'
-                ? 'bg-gradient-to-b from-[#571B32] to-[#3B1222] dark:from-[#49232E]/90 dark:to-[#2D151D]/95 text-[#FFF8F2] dark:text-[#F7EEE9] border border-gold/55 shadow-[0_4px_16px_rgba(242,166,74,0.22),inset_0_1px_0_rgba(255,255,255,0.22)]'
-                : 'text-ink-2 hover:text-ink hover:-translate-y-[1px]'
-            }`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('home')}`}
           >
             Home
           </button>
 
           {/* 2. Events with Chevron */}
           <div
-            className="relative"
-            onMouseEnter={() => setEventsDropdownOpen(true)}
-            onMouseLeave={() => setEventsDropdownOpen(false)}
+            ref={(el) => {
+              itemRefs.current.events = el;
+            }}
+            className="relative z-10"
+            onMouseEnter={() => {
+              setHoveredKey('events');
+              setEventsDropdownOpen(true);
+            }}
           >
             <button
               type="button"
+              onFocus={() => setHoveredKey('events')}
+              onBlur={() => setHoveredKey(null)}
               onClick={() => {
                 setEventsDropdownOpen((prev) => !prev);
-                scrollToSection('event-categories');
+                scrollToSection('event-categories', 'events');
               }}
               aria-expanded={eventsDropdownOpen}
               aria-haspopup="true"
-              className="flex items-center gap-1.5 text-[13.5px] font-medium text-ink-2 hover:text-gold hover:-translate-y-[1px] transition-all duration-200 py-2"
+              className={`flex items-center gap-1.5 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('events')}`}
             >
               <span>Events</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-75" />
+              <ChevronDown className="w-3.5 h-3.5 opacity-80" />
             </button>
 
             {eventsDropdownOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-60 z-50">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 w-60 z-50">
                 <div className="rounded-2xl p-2 bg-surface/95 dark:bg-[#1B0E14]/95 backdrop-blur-2xl border border-line shadow-2xl space-y-0.5">
                   {[
                     { label: 'Weddings', icon: Gem },
@@ -240,35 +340,54 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* 3. Services */}
           <button
+            ref={(el) => {
+              itemRefs.current.services = el;
+            }}
             type="button"
+            onMouseEnter={() => {
+              setHoveredKey('services');
+              setEventsDropdownOpen(false);
+            }}
+            onFocus={() => setHoveredKey('services')}
+            onBlur={() => setHoveredKey(null)}
             onClick={() => onNavigate('services')}
-            className={`text-[13.5px] font-medium transition-all duration-200 py-2 hover:-translate-y-[1px] ${
-              currentTab === 'services'
-                ? 'text-gold font-semibold underline decoration-gold/60 underline-offset-4'
-                : 'text-ink-2 hover:text-gold'
-            }`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('services')}`}
           >
             Services
           </button>
 
           {/* 4. Gallery */}
           <button
+            ref={(el) => {
+              itemRefs.current.gallery = el;
+            }}
             type="button"
+            onMouseEnter={() => {
+              setHoveredKey('gallery');
+              setEventsDropdownOpen(false);
+            }}
+            onFocus={() => setHoveredKey('gallery')}
+            onBlur={() => setHoveredKey(null)}
             onClick={() => onNavigate('inspiration')}
-            className={`text-[13.5px] font-medium transition-all duration-200 py-2 hover:-translate-y-[1px] ${
-              currentTab === 'inspiration'
-                ? 'text-gold font-semibold underline decoration-gold/60 underline-offset-4'
-                : 'text-ink-2 hover:text-gold'
-            }`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('gallery')}`}
           >
             Gallery
           </button>
 
           {/* 5. About */}
           <button
+            ref={(el) => {
+              itemRefs.current.about = el;
+            }}
             type="button"
-            onClick={() => scrollToSection('how-it-works')}
-            className="text-[13.5px] font-medium text-ink-2 hover:text-gold hover:-translate-y-[1px] transition-all duration-200 py-2"
+            onMouseEnter={() => {
+              setHoveredKey('about');
+              setEventsDropdownOpen(false);
+            }}
+            onFocus={() => setHoveredKey('about')}
+            onBlur={() => setHoveredKey(null)}
+            onClick={() => scrollToSection('how-it-works', 'about')}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('about')}`}
           >
             About
           </button>
@@ -331,20 +450,29 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={() => {
+              setLandingAnchor('home');
               onNavigate('landing');
               setMobileMenuOpen(false);
             }}
-            className="w-full min-h-[44px] px-3 rounded-xl text-left text-sm font-medium text-ink hover:bg-surface-2/70 flex items-center justify-between"
+            className={`w-full min-h-[44px] px-4 rounded-full text-left text-sm font-medium flex items-center justify-between ${
+              activeKey === 'home'
+                ? 'bg-gradient-to-r from-[#571B32] to-[#3B1222] text-[#FFF8F2] border border-gold/45'
+                : 'text-ink hover:bg-surface-2/70'
+            }`}
           >
             <span>Home</span>
           </button>
           <button
             type="button"
             onClick={() => {
-              scrollToSection('event-categories');
+              scrollToSection('event-categories', 'events');
               setMobileMenuOpen(false);
             }}
-            className="w-full min-h-[44px] px-3 rounded-xl text-left text-sm font-medium text-ink-2 hover:text-ink hover:bg-surface-2/70 flex items-center justify-between"
+            className={`w-full min-h-[44px] px-4 rounded-full text-left text-sm font-medium flex items-center justify-between ${
+              activeKey === 'events'
+                ? 'bg-gradient-to-r from-[#571B32] to-[#3B1222] text-[#FFF8F2] border border-gold/45'
+                : 'text-ink-2 hover:text-ink hover:bg-surface-2/70'
+            }`}
           >
             <span>Events</span>
             <ChevronDown className="w-4 h-4 text-gold" />
@@ -355,7 +483,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate('services');
               setMobileMenuOpen(false);
             }}
-            className="w-full min-h-[44px] px-3 rounded-xl text-left text-sm font-medium text-ink-2 hover:text-ink hover:bg-surface-2/70 flex items-center justify-between"
+            className={`w-full min-h-[44px] px-4 rounded-full text-left text-sm font-medium flex items-center justify-between ${
+              activeKey === 'services'
+                ? 'bg-gradient-to-r from-[#571B32] to-[#3B1222] text-[#FFF8F2] border border-gold/45'
+                : 'text-ink-2 hover:text-ink hover:bg-surface-2/70'
+            }`}
           >
             <span>Services</span>
           </button>
@@ -365,17 +497,25 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate('inspiration');
               setMobileMenuOpen(false);
             }}
-            className="w-full min-h-[44px] px-3 rounded-xl text-left text-sm font-medium text-ink-2 hover:text-ink hover:bg-surface-2/70 flex items-center justify-between"
+            className={`w-full min-h-[44px] px-4 rounded-full text-left text-sm font-medium flex items-center justify-between ${
+              activeKey === 'gallery'
+                ? 'bg-gradient-to-r from-[#571B32] to-[#3B1222] text-[#FFF8F2] border border-gold/45'
+                : 'text-ink-2 hover:text-ink hover:bg-surface-2/70'
+            }`}
           >
             <span>Gallery</span>
           </button>
           <button
             type="button"
             onClick={() => {
-              scrollToSection('how-it-works');
+              scrollToSection('how-it-works', 'about');
               setMobileMenuOpen(false);
             }}
-            className="w-full min-h-[44px] px-3 rounded-xl text-left text-sm font-medium text-ink-2 hover:text-ink hover:bg-surface-2/70 flex items-center justify-between"
+            className={`w-full min-h-[44px] px-4 rounded-full text-left text-sm font-medium flex items-center justify-between ${
+              activeKey === 'about'
+                ? 'bg-gradient-to-r from-[#571B32] to-[#3B1222] text-[#FFF8F2] border border-gold/45'
+                : 'text-ink-2 hover:text-ink hover:bg-surface-2/70'
+            }`}
           >
             <span>About</span>
           </button>
