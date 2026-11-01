@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 420" fill="none">
+  <g stroke="#F1C27D" stroke-opacity="0.32" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main curving stem -->
+    <path d="M -10 410 C 35 340, 68 250, 95 110" />
+    <path d="M 15 420 C 55 360, 115 290, 165 215" />
+    
+    <!-- Top leaf cluster -->
+    <path d="M 95 110 C 82 72, 98 35, 118 14 C 124 48, 116 84, 95 110 Z" />
+    <path d="M 95 110 C 103 75, 110 45, 118 14" stroke-opacity="0.2" />
+
+    <!-- Left upper leaf -->
+    <path d="M 84 155 C 48 132, 26 95, 22 58 C 56 76, 78 112, 84 155 Z" />
+    <path d="M 84 155 C 58 122, 40 92, 22 58" stroke-opacity="0.2" />
+
+    <!-- Right upper leaf -->
+    <path d="M 88 142 C 118 115, 154 102, 188 104 C 164 132, 128 146, 88 142 Z" />
+    <path d="M 88 142 C 125 126, 155 114, 188 104" stroke-opacity="0.2" />
+
+    <!-- Left mid leaf -->
+    <path d="M 66 225 C 28 205, 4 168, -4 128 C 32 146, 56 184, 66 225 Z" />
+    <path d="M 66 225 C 38 190, 18 160, -4 128" stroke-opacity="0.2" />
+
+    <!-- Right mid leaf -->
+    <path d="M 72 208 C 108 182, 148 172, 184 176 C 154 202, 114 214, 72 208 Z" />
+    <path d="M 72 208 C 112 194, 146 184, 184 176" stroke-opacity="0.2" />
+
+    <!-- Secondary branch upper leaf -->
+    <path d="M 165 215 C 175 182, 204 156, 236 144 C 224 178, 198 204, 165 215 Z" />
+    <path d="M 165 215 C 192 190, 214 166, 236 144" stroke-opacity="0.2" />
+
+    <!-- Secondary branch right leaf -->
+    <path d="M 132 262 C 168 248, 206 250, 238 264 C 204 282, 166 278, 132 262 Z" />
+    <path d="M 132 262 C 168 262, 202 262, 238 264" stroke-opacity="0.2" />
+
+    <!-- Lower left leaf -->
+    <path d="M 42 298 C 12 278, -6 246, -12 212 C 18 228, 36 262, 42 298 Z" />
+    <path d="M 94 312 C 128 298, 168 302, 198 318 C 164 334, 126 328, 94 312 Z" />
+  </g>
+</svg>
+

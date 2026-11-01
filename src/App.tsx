@@ -165,9 +165,9 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0709] text-white flex flex-col font-sans selection:bg-[#E5A855] selection:text-black">
+    <div className="min-h-screen bg-[#12090E] text-[#F7EEE9] flex flex-col font-sans selection:bg-[#F1C27D] selection:text-[#12090E]">
       
-      {/* Luxury Navbar (Eventara AI Assistant Style) */}
+      {/* Luxury Navbar (Eventara Event Planner Style) */}
       <Navbar
         currentTab={currentView}
         onNavigate={handleNavigate}
