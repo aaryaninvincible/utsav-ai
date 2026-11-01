@@ -73,17 +73,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Center: Frosted Capsule Pill Links */}
+        {/* Center: Clean Menu directly in navbar (NO inner capsule wrapper, NO outline) */}
         <nav
-          className="hidden md:flex items-center gap-1 px-3 py-1 rounded-full bg-[#1F1218]/70 border border-white/10"
+          className="hidden md:flex items-center gap-5 lg:gap-7"
           aria-label="Main Navigation"
         >
           <button
             onClick={() => onNavigate('landing')}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
               currentTab === 'landing'
-                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
-                : 'text-white/70 hover:text-white'
+                ? 'bg-[#3E1A25] text-white'
+                : 'text-white/75 hover:text-white'
             }`}
           >
             Home
@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="relative">
             <button
               onClick={() => setEventsDropdownOpen(!eventsDropdownOpen)}
-              className="flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white transition-colors"
+              className="flex items-center gap-1 text-xs font-semibold text-white/75 hover:text-white transition-colors py-1"
             >
               <span>Events</span>
               <ChevronDown className="w-3.5 h-3.5 text-white/50" />
@@ -147,10 +147,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => onNavigate('dashboard')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`text-xs font-semibold transition-colors py-1 ${
               currentTab === 'dashboard'
-                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
-                : 'text-white/70 hover:text-white'
+                ? 'text-[#E5A855]'
+                : 'text-white/75 hover:text-white'
             }`}
           >
             Services
@@ -158,10 +158,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => onNavigate('inspiration')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`text-xs font-semibold transition-colors py-1 ${
               currentTab === 'inspiration'
-                ? 'bg-[#4A1E29] text-white shadow-sm border border-white/15'
-                : 'text-white/70 hover:text-white'
+                ? 'text-[#E5A855]'
+                : 'text-white/75 hover:text-white'
             }`}
           >
             Gallery
@@ -169,7 +169,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={onOpenCalendar}
-            className="px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/70 hover:text-white transition-colors"
+            className="text-xs font-semibold text-white/75 hover:text-white transition-colors py-1"
           >
             About
           </button>
