@@ -1,5 +1,8 @@
 # Eventara — Event Planning Platform
 
+**Live Application:** [https://eventara-planner.vercel.app](https://eventara-planner.vercel.app)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Site-eventara--planner.vercel.app-E5A855?style=for-the-badge&logo=vercel)](https://eventara-planner.vercel.app)
 [![Production Build](https://img.shields.io/badge/Production%20Build-Passing%20(Vite%206)-10B981?style=for-the-badge&logo=vite)](https://github.com/aaryaninvincible/utsav-ai)
 [![Tech Stack](https://img.shields.io/badge/Stack-React%2018%20%7C%20TypeScript%20%7C%20Tailwind%20CSS-F59E0B?style=for-the-badge&logo=react)](https://react.dev)
 
