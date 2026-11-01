@@ -167,12 +167,13 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#0D0709] text-white flex flex-col font-sans selection:bg-[#E5A855] selection:text-black">
       
-      {/* Luxury Navbar (Eventara Event Planner Style) */}
+      {/* Luxury Navbar (Eventara AI Assistant Style) */}
       <Navbar
         currentTab={currentView}
         onNavigate={handleNavigate}
         onOpenAuth={() => setIsAuthOpen(true)}
         onOpenCalendar={scrollToCalendar}
+        onOpenAIAssistant={() => handleOpenAIWithPrompt()}
         onPlanYourEvent={() => {
           setCurrentView('create');
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -196,6 +197,7 @@ export const App: React.FC = () => {
             onOpenInspiration={() => handleNavigate('inspiration')}
             onOpenCalendar={scrollToCalendar}
             onPlanEventFromCalendar={handlePlanEventFromCalendar}
+            onOpenAIAssistant={handleOpenAIWithPrompt}
             events={events}
           />
         )}
