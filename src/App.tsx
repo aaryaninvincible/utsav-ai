@@ -6,6 +6,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { CreateEventWizard } from './pages/CreateEventWizard';
 import { EventDetailsPage } from './pages/EventDetailsPage';
 import { InspirationPage } from './pages/InspirationPage';
+import { ServicesPage } from './pages/ServicesPage';
 import { AIAssistantModal } from './components/AIAssistantModal';
 import { ExportModal } from './components/ExportModal';
 import { AuthModal, UserProfile } from './components/AuthModal';
@@ -18,7 +19,7 @@ import {
   duplicateEvent as duplicateEventStorage 
 } from './services/storageService';
 
-type ViewMode = 'landing' | 'dashboard' | 'create' | 'details' | 'inspiration';
+type ViewMode = 'landing' | 'services' | 'dashboard' | 'create' | 'details' | 'inspiration';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewMode>('landing');
@@ -77,7 +78,7 @@ export const App: React.FC = () => {
       }
     }
 
-    if (tab === 'landing' || tab === 'dashboard' || tab === 'create' || tab === 'details' || tab === 'inspiration') {
+    if (tab === 'landing' || tab === 'services' || tab === 'dashboard' || tab === 'create' || tab === 'details' || tab === 'inspiration') {
       setCurrentView(tab as ViewMode);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -196,6 +197,16 @@ export const App: React.FC = () => {
             onOpenCalendar={scrollToCalendar}
             onPlanEventFromCalendar={handlePlanEventFromCalendar}
             events={events}
+          />
+        )}
+
+        {currentView === 'services' && (
+          <ServicesPage
+            onPlanEvent={(cat) => {
+              setCurrentView('create');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onOpenCalendar={scrollToCalendar}
           />
         )}
 

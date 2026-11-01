@@ -49,20 +49,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div className="relative min-h-screen bg-[#0D0709] text-white overflow-hidden selection:bg-[#E5A855] selection:text-black">
       
       {/* =========================================================================
-          BACKGROUND GRAPHICS: Flowing Silk Ribbons & Botanical Foliage (Image 3)
+          BACKGROUND GRAPHICS: Ambient Glows, Foliage & Silk Ribbons (Image 3)
           ========================================================================= */}
       
       {/* Ambient Lighting Orbs */}
       <div className="absolute top-10 left-10 w-[500px] h-[500px] rounded-full bg-[#E5A855]/10 filter blur-[150px] pointer-events-none" />
-      <div className="absolute top-48 right-10 w-[600px] h-[600px] rounded-full bg-[#D97736]/12 filter blur-[160px] pointer-events-none" />
+      <div className="absolute top-40 right-10 w-[600px] h-[600px] rounded-full bg-[#D97736]/12 filter blur-[160px] pointer-events-none" />
       <div className="absolute bottom-20 left-1/3 w-[550px] h-[550px] rounded-full bg-[#702435]/15 filter blur-[160px] pointer-events-none" />
 
       {/* Botanical Leaf Foliage Engravings (Bottom Left & Bottom Right) */}
       <div className="absolute bottom-16 left-0 opacity-25 pointer-events-none hidden md:block z-0">
         <svg width="340" height="420" viewBox="0 0 340 420" fill="none" stroke="#E5A855" strokeWidth="1.2">
-          {/* Main graceful stem */}
           <path d="M-20 420 C40 360 80 280 60 160 C50 100 20 40 0 0" strokeDasharray="1 0" />
-          {/* Delicate botanical leaves */}
           <path d="M60 160 C100 130 160 150 180 190 C150 200 90 190 60 160Z" />
           <path d="M70 210 C120 190 180 220 190 260 C150 270 100 250 70 210Z" />
           <path d="M75 270 C130 260 180 300 170 340 C130 340 90 310 75 270Z" />
@@ -104,7 +102,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             d="M-50 150 C200 90, 500 190, 900 110 C1200 50, 1350 130, 1500 160 L1500 180 L-50 180 Z"
             fill="url(#silkRibbon2)"
           />
-          {/* Delicate luminous crest line */}
           <path
             d="M-50 120 C300 40, 600 180, 1000 60 C1200 10, 1400 90, 1500 140"
             stroke="#E5A855"
@@ -115,56 +112,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </div>
 
       {/* =========================================================================
-          HERO SECTION WITH THE ILLUMINATED GOLDEN CRESCENT ARC
+          HERO SECTION (Exact match to Image 3 mockup)
           ========================================================================= */}
-      <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        
-        {/* Main Hero Container with Curved Golden Arc Framing Venue Image on Right */}
-        <div className="relative rounded-3xl overflow-hidden min-h-[520px] lg:min-h-[580px] flex items-center">
+      <section className="relative pt-8 pb-12 sm:pt-12 sm:pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[480px] lg:min-h-[540px]">
           
-          {/* THE GOLDEN ARC SWOOP & VENUE BACKGROUND */}
-          <div className="absolute inset-0 z-0">
-            {/* The right side venue image uploaded by user */}
-            <div className="absolute inset-y-0 right-0 w-full lg:w-[65%] h-full overflow-hidden">
-              <img
-                src="/assets/hero/eventara-night-venue.jpg"
-                alt="Enchanting evening royal wedding venue with fairy lights and hanging lanterns"
-                className="w-full h-full object-cover object-center scale-105"
-              />
-              {/* Inner darkening gradient on the left of image for smooth blending */}
-              <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-[#0D0709] via-[#0D0709]/70 to-transparent" />
-            </div>
-
-            {/* Dark solid backdrop on the left for crisp typography contrast */}
-            <div className="absolute inset-y-0 left-0 w-full lg:w-[48%] bg-[#0D0709] z-0" />
-
-            {/* The Elegant Curved Golden Arc Line (as seen in Image 3) */}
-            <div className="absolute inset-0 pointer-events-none hidden lg:block z-10">
-              <svg className="w-full h-full" viewBox="0 0 1200 600" fill="none" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="goldenArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#E5A855" stopOpacity="0.9" />
-                    <stop offset="50%" stopColor="#F5C07A" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#C87A32" stopOpacity="0.4" />
-                  </linearGradient>
-                  <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="8" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-                </defs>
-                {/* Glowing Golden Arc Path swooping from top down and curving to frame the right side */}
-                <path
-                  d="M 520 0 C 440 180, 430 380, 720 540 C 850 600, 1050 600, 1200 600"
-                  stroke="url(#goldenArcGrad)"
-                  strokeWidth="2.5"
-                  filter="url(#arcGlow)"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Left Hero Typography (placed on dark left column for 100% legibility) */}
-          <div className="relative z-10 w-full lg:w-[50%] p-6 sm:p-10 lg:pl-12 lg:pr-6 space-y-6 text-left">
+          {/* Left Column: Eyebrow, Luxury Typography & Buttons (6 cols) */}
+          <div className="lg:col-span-6 space-y-6 text-left z-10 pr-0 lg:pr-4">
             
             {/* Spaced Eyebrow */}
             <div className="flex items-center gap-2">
@@ -173,8 +127,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </span>
             </div>
 
-            {/* Headline matching Image 3 with Gold Script Flourish on "Special" */}
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-[62px] font-bold tracking-tight text-white leading-[1.05]">
+            {/* Headline with Gold Script Flourish on "Special" */}
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-[64px] font-bold tracking-tight text-white leading-[1.06]">
               Make Every <br />
               Occasion{' '}
               <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#E5A855] via-[#F5C27E] to-[#E58235] drop-shadow-md">
@@ -182,7 +136,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </span>
             </h1>
 
-            {/* Supporting Copy */}
+            {/* Subtitle */}
             <p className="text-sm sm:text-base text-white/75 max-w-md font-sans font-light leading-relaxed">
               A one-stop event planning platform to design, organize and manage unforgettable events — from intimate gatherings to grand celebrations.
             </p>
@@ -213,25 +167,49 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
           </div>
 
-          {/* Optional Interactive 3D WebGL Overlay when clicked */}
-          {show3DVisualizer && (
-            <div className="absolute inset-y-0 right-0 w-full lg:w-[50%] bg-[#12080D]/95 backdrop-blur-xl z-20 flex flex-col items-center justify-center p-6 border-l border-[#E5A855]/50 animate-fadeIn">
-              <div className="w-full h-[320px] flex items-center justify-center">
-                <Festive3DCanvas festivalGlow="#E5A855" isInteractive={true} />
-              </div>
-              <div className="mt-2 text-center">
-                <span className="text-xs font-mono text-[#E5A855] px-3 py-1 rounded-full bg-black/60 border border-[#E5A855]/40">
-                  Interactive 3D Celebration Diya • Drag to Orbit
-                </span>
-              </div>
+          {/* Right Column: Sweeping Crescent Arch with Venue Background (6 cols) */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
+            
+            {/* The Majestic Curved Crescent Frame */}
+            <div className="relative w-full h-[380px] sm:h-[460px] lg:h-[500px] rounded-2xl sm:rounded-3xl lg:rounded-l-[180px] lg:rounded-r-3xl overflow-hidden border-2 border-[#E5A855]/80 shadow-[-20px_0_50px_rgba(229,168,85,0.35)] group bg-[#160B10]">
+              
+              {!show3DVisualizer ? (
+                /* Raw Venue Image uploaded by user */
+                <div className="relative w-full h-full">
+                  <img
+                    src="/assets/hero/eventara-night-venue.jpg"
+                    alt="Royal evening wedding canopy illuminated by lanterns and fairy lights"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  />
+                  {/* Subtle ambient lighting vignette inside frame */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Corner Accent Badge */}
+                  <div className="absolute bottom-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-[11px] text-[#E5A855] font-medium">
+                    <Sparkles className="w-3 h-3 text-[#E5A855]" />
+                    <span>Royal Palace Mandap</span>
+                  </div>
+                </div>
+              ) : (
+                /* Interactive 3D Three.js Visualizer */
+                <div className="relative w-full h-full flex flex-col items-center justify-center p-4 bg-[#140B10]">
+                  <Festive3DCanvas festivalGlow="#E5A855" isInteractive={true} />
+                  <div className="absolute top-4 left-4 text-xs font-mono text-[#E5A855] bg-black/60 px-3 py-1 rounded-full border border-[#E5A855]/40">
+                    Interactive 3D WebGL • Three.js
+                  </div>
+                </div>
+              )}
+
+              {/* Glowing Rim Inner Aura */}
+              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-l-[180px] lg:rounded-r-3xl pointer-events-none border border-[#E5A855]/30 shadow-inner" />
             </div>
-          )}
+          </div>
         </div>
 
         {/* =========================================================================
-            FLOATING LIQUID FROSTED GLASS FEATURE BAR (as in Image 3)
+            FLOATING LIQUID FROSTED GLASS FEATURE BAR (Image 3)
             ========================================================================= */}
-        <div className="mt-10 sm:mt-12 w-full rounded-full p-4 sm:p-5 bg-[#180E13]/80 backdrop-blur-2xl border border-white/15 shadow-[0_12px_45px_rgba(0,0,0,0.65)]">
+        <div className="mt-12 sm:mt-16 w-full rounded-full p-4 sm:p-5 bg-[#180E13]/85 backdrop-blur-2xl border border-white/15 shadow-[0_12px_45px_rgba(0,0,0,0.65)]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 divide-y md:divide-y-0 md:divide-x divide-white/10">
             
             {/* Feature 1 */}

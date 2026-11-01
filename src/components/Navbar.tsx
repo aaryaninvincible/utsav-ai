@@ -146,10 +146,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <button
-            onClick={() => onNavigate('dashboard')}
+            onClick={() => onNavigate('services')}
             className={`text-xs font-semibold transition-colors py-1 ${
-              currentTab === 'dashboard'
-                ? 'text-[#E5A855]'
+              currentTab === 'services'
+                ? 'text-[#E5A855] font-bold'
                 : 'text-white/75 hover:text-white'
             }`}
           >
@@ -272,12 +272,21 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
           <button
             onClick={() => {
+              onNavigate('services');
+              setMobileMenuOpen(false);
+            }}
+            className="w-full text-left py-2 text-xs font-semibold text-white/80"
+          >
+            Services
+          </button>
+          <button
+            onClick={() => {
               onNavigate('dashboard');
               setMobileMenuOpen(false);
             }}
             className="w-full text-left py-2 text-xs font-semibold text-white/80"
           >
-            Services & Dashboard
+            My Events (Dashboard)
           </button>
           <button
             onClick={() => {
