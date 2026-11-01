@@ -207,18 +207,18 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
   };
 
   return (
-    <section id="calendar-section" className="relative py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-white">
+    <section id="calendar-section" className="relative py-16 px-4 sm:px-6 lg:px-8 max-w-[1380px] mx-auto text-ink">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E5A855]/15 border border-[#E5A855]/30 text-xs font-semibold text-[#E5A855] uppercase tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/30 text-xs font-semibold text-gold-ink uppercase tracking-widest mb-3">
           <CalendarIcon className="w-3.5 h-3.5" />
-          <span>Interactive Auspicious Calendar</span>
+          <span>Interactive Celebration Calendar</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-          Plan By Date & <span className="italic font-normal text-[#E5A855]">Sacred Muhurats</span>
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink tracking-tight">
+          Plan By Date & <span className="italic font-normal text-gold-ink">Sacred Muhurats</span>
         </h2>
-        <p className="text-xs sm:text-sm text-white/60 mt-2">
-          Select any date to view festivals, auspicious panchang windows, or schedule your own celebration with 1-click AI planning.
+        <p className="text-xs sm:text-sm text-ink-2 mt-2">
+          Select any date to view festivals, auspicious windows, or schedule your own celebration with one-click planning.
         </p>
       </div>
 
@@ -226,15 +226,15 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Column: Full Month Calendar Grid (7 cols) */}
-        <div className="lg:col-span-7 rounded-3xl p-6 sm:p-8 bg-[#140B10]/90 border border-white/15 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+        <div className="lg:col-span-7 rounded-3xl p-6 sm:p-8 eventara-editorial-card">
           
           {/* Calendar Header with Month Selector */}
-          <div className="flex items-center justify-between pb-6 border-b border-white/10">
+          <div className="flex items-center justify-between pb-6 border-b border-line">
             <div>
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+              <h3 className="font-display text-xl sm:text-2xl font-semibold text-ink">
                 {monthNames[currentMonth]} {currentYear}
               </h3>
-              <span className="text-xs text-[#E5A855]">
+              <span className="text-xs text-gold-ink">
                 {allOccasions.filter((o) => {
                   const [y, m] = o.dateStr.split('-');
                   return Number(y) === currentYear && Number(m) === currentMonth + 1;
@@ -244,15 +244,17 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
 
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={handlePrevMonth}
-                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
+                className="p-2 rounded-xl bg-surface-2 hover:bg-line/50 border border-line text-ink-2 hover:text-ink transition-colors"
                 aria-label="Previous Month"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
+                type="button"
                 onClick={handleNextMonth}
-                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white/70 hover:text-white transition-colors"
+                className="p-2 rounded-xl bg-surface-2 hover:bg-line/50 border border-line text-ink-2 hover:text-ink transition-colors"
                 aria-label="Next Month"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -261,7 +263,7 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
           </div>
 
           {/* Days of Week Header */}
-          <div className="grid grid-cols-7 text-center py-3 text-xs font-semibold text-white/40 uppercase tracking-wider">
+          <div className="grid grid-cols-7 text-center py-3 text-xs font-semibold text-ink-2 uppercase tracking-wider">
             <span>Sun</span>
             <span>Mon</span>
             <span>Tue</span>
@@ -275,7 +277,7 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
           <div className="grid grid-cols-7 gap-2 pt-2">
             {/* Empty slots before first day */}
             {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-              <div key={`empty-${i}`} className="h-12 sm:h-14 rounded-2xl bg-white/[0.02]" />
+              <div key={`empty-${i}`} className="h-12 sm:h-14 rounded-2xl bg-surface-2/40" />
             ))}
 
             {/* Month Days */}
@@ -291,20 +293,21 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
               return (
                 <button
                   key={dateKey}
+                  type="button"
                   onClick={() => setSelectedDateStr(dateKey)}
                   className={`relative h-12 sm:h-14 rounded-2xl flex flex-col items-center justify-center transition-all ${
                     isSelected
-                      ? 'bg-gradient-to-br from-[#E5A855] to-[#D97736] text-black font-bold shadow-[0_0_20px_rgba(229,168,85,0.4)] scale-105 z-10'
+                      ? 'bg-gradient-to-br from-[#E5A855] to-[#D97736] text-[#12090E] font-bold shadow-md scale-105 z-10'
                       : eventOnDate
-                      ? 'bg-white/10 hover:bg-white/15 text-white border border-[#E5A855]/40'
-                      : 'bg-white/[0.03] hover:bg-white/[0.08] text-white/80'
+                      ? 'bg-gold/15 hover:bg-gold/25 text-ink border border-gold/45 font-semibold'
+                      : 'bg-surface-2/60 hover:bg-surface-2 text-ink-2 hover:text-ink'
                   }`}
                 >
                   <span className="text-xs sm:text-sm">{day}</span>
                   {eventOnDate && (
                     <span
                       className={`w-1.5 h-1.5 rounded-full mt-0.5 ${
-                        isSelected ? 'bg-black' : 'bg-[#E5A855] animate-ping'
+                        isSelected ? 'bg-[#12090E]' : 'bg-gold'
                       }`}
                     />
                   )}
@@ -314,9 +317,9 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
           </div>
 
           {/* Quick Legend */}
-          <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-white/60">
+          <div className="mt-6 pt-4 border-t border-line flex flex-wrap items-center justify-between text-xs text-ink-2">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#E5A855]" />
+              <span className="w-2 h-2 rounded-full bg-gold" />
               <span>Auspicious Festival / Muhurat</span>
             </div>
             <span>Click any day to schedule</span>
@@ -324,19 +327,19 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
         </div>
 
         {/* Right Column: Selected Date Interactive Card (5 cols) */}
-        <div className="lg:col-span-5 rounded-3xl p-6 sm:p-8 bg-[#160B10]/95 border border-[#E5A855]/30 backdrop-blur-xl shadow-[0_0_50px_rgba(229,168,85,0.15)] space-y-6">
+        <div className="lg:col-span-5 rounded-3xl p-6 sm:p-8 eventara-editorial-card space-y-6">
           
           {/* Active Date Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+          <div className="flex items-center justify-between pb-4 border-b border-line">
             <div>
-              <span className="text-xs text-white/50 uppercase tracking-widest font-mono">
+              <span className="text-xs text-ink-2 uppercase tracking-widest font-mono">
                 Selected Date
               </span>
-              <h4 className="font-serif text-2xl font-bold text-white mt-0.5">
+              <h4 className="font-display text-2xl font-semibold text-ink mt-0.5">
                 {selectedDateStr}
               </h4>
             </div>
-            <div className="p-2.5 rounded-2xl bg-[#E5A855]/20 text-[#E5A855]">
+            <div className="p-2.5 rounded-2xl bg-gold/15 text-gold">
               <Sparkles className="w-5 h-5" />
             </div>
           </div>
@@ -345,30 +348,30 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
           {activeOccasion ? (
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="text-3xl p-3 rounded-2xl bg-white/5 border border-white/10">
+                <span className="text-3xl p-3 rounded-2xl bg-surface-2 border border-line">
                   {activeOccasion.icon}
                 </span>
                 <div>
-                  <h5 className="font-serif text-xl font-bold text-white">
+                  <h5 className="font-display text-xl font-semibold text-ink">
                     {activeOccasion.name}
                   </h5>
-                  <span className="text-xs text-[#E5A855] uppercase tracking-wider font-semibold">
+                  <span className="text-xs text-gold-ink uppercase tracking-wider font-semibold">
                     {activeOccasion.category.toUpperCase()} • Auspicious Day
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
+              <p className="text-xs sm:text-sm text-ink-2 leading-relaxed">
                 {activeOccasion.description}
               </p>
 
               {activeOccasion.muhurat && (
-                <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-1">
-                  <div className="flex items-center gap-1.5 text-[#E5A855] font-semibold">
+                <div className="p-3.5 rounded-2xl bg-surface-2 border border-line text-xs space-y-1">
+                  <div className="flex items-center gap-1.5 text-gold-ink font-semibold">
                     <Clock className="w-3.5 h-3.5" />
                     <span>Auspicious Window (Muhurat)</span>
                   </div>
-                  <div className="font-mono text-sm text-white font-bold">
+                  <div className="font-mono text-sm text-ink font-bold">
                     {activeOccasion.muhurat}
                   </div>
                 </div>
@@ -376,12 +379,12 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
 
               {activeOccasion.rituals && (
                 <div className="space-y-1.5 pt-1">
-                  <span className="text-xs font-semibold text-white/60">Traditions & Rituals:</span>
+                  <span className="text-xs font-semibold text-ink-2">Traditions & Rituals:</span>
                   <div className="flex flex-wrap gap-1.5">
                     {activeOccasion.rituals.map((r, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 rounded-lg text-[11px] bg-white/5 border border-white/10 text-white/80"
+                        className="px-2.5 py-1 rounded-lg text-[11px] bg-surface-2 border border-line text-ink"
                       >
                         ✓ {r}
                       </span>
@@ -390,18 +393,19 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
                 </div>
               )}
 
-              {/* Prominent User Prompt: "Do you wanna plan it from here now?" */}
-              <div className="pt-4 border-t border-white/10 space-y-3">
-                <div className="p-3 rounded-xl bg-gradient-to-r from-[#D97736]/20 to-[#E5A855]/10 border border-[#E5A855]/30 text-center">
-                  <p className="text-sm font-serif font-bold text-[#E5A855]">
+              {/* Prominent User Prompt */}
+              <div className="pt-4 border-t border-line space-y-3">
+                <div className="p-3 rounded-xl bg-gold/10 border border-gold/30 text-center">
+                  <p className="text-sm font-display font-semibold text-gold-ink">
                     Do you want to plan it from here now?
                   </p>
-                  <p className="text-[11px] text-white/60 mt-0.5">
-                    Auto-load verified menus, guest budgets & decor checklists for {activeOccasion.name}.
+                  <p className="text-[11px] text-ink-2 mt-0.5">
+                    Load structured menus, guest budgets & decor checklists for {activeOccasion.name}.
                   </p>
                 </div>
 
                 <button
+                  type="button"
                   onClick={() =>
                     onPlanEvent({
                       name: activeOccasion.name,
@@ -409,7 +413,7 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
                       category: activeOccasion.category,
                     })
                   }
-                  className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-sm shadow-[0_0_25px_rgba(229,168,85,0.4)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  className="btn-sheen w-full py-3.5 rounded-full bg-gradient-to-r from-[#E07A5F] via-[#EEA862] to-[#F5C97B] text-[#241015] font-semibold text-sm shadow-md flex items-center justify-center gap-2"
                 >
                   <span>Yes, Plan This Event Now</span>
                   <ArrowRight className="w-4 h-4" />
@@ -419,34 +423,34 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
           ) : (
             /* SCENARIO B: No event exists on this date - Let user add their own! */
             <div className="space-y-4">
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/70">
-                <span>✨ No preset festival on this date. You can add your personal event below!</span>
+              <div className="p-3 rounded-xl bg-surface-2 border border-line text-xs text-ink-2">
+                <span>No preset festival on this date. Schedule your personal occasion below.</span>
               </div>
 
               <form onSubmit={handleSaveCustomOccasion} className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold text-white/80 mb-1">
+                  <label className="block text-xs font-semibold text-ink mb-1">
                     Your Event Title
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Aryan & Meera's Royal Sangeet"
+                    placeholder="e.g. Royal Sangeet or Anniversary Dinner"
                     value={customTitle}
                     onChange={(e) => setCustomTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-sm text-white placeholder:text-white/30 focus:border-[#E5A855] focus:outline-none"
+                    className="input"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-white/80 mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       Event Category
                     </label>
                     <select
                       value={customCategory}
                       onChange={(e) => setCustomCategory(e.target.value as EventCategory)}
-                      className="w-full px-3 py-2 rounded-xl bg-[#1C1016] border border-white/15 text-xs text-white focus:border-[#E5A855] focus:outline-none"
+                      className="input text-xs"
                     >
                       <option value="wedding">Royal Wedding</option>
                       <option value="birthday">Birthday Party</option>
@@ -456,25 +460,25 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-white/80 mb-1">
+                    <label className="block text-xs font-semibold text-ink mb-1">
                       Guest Count
                     </label>
                     <input
                       type="number"
                       value={customGuests}
                       onChange={(e) => setCustomGuests(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-xs text-white focus:border-[#E5A855] focus:outline-none"
+                      className="input text-xs"
                     />
                   </div>
                 </div>
 
                 {/* Prominent Prompt */}
-                <div className="p-3 rounded-xl bg-gradient-to-r from-[#D97736]/20 to-[#E5A855]/10 border border-[#E5A855]/30 text-center mt-3">
-                  <p className="text-sm font-serif font-bold text-[#E5A855]">
+                <div className="p-3 rounded-xl bg-gold/10 border border-gold/30 text-center mt-3">
+                  <p className="text-sm font-display font-semibold text-gold-ink">
                     Do you want to plan it from here now?
                   </p>
-                  <p className="text-[11px] text-white/60 mt-0.5">
-                    Launch AI budget calculation and vendor checklist directly for {selectedDateStr}.
+                  <p className="text-[11px] text-ink-2 mt-0.5">
+                    Launch budget calculation and vendor checklist directly for {selectedDateStr}.
                   </p>
                 </div>
 
@@ -489,7 +493,7 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
                       budget: Number(customBudget) || 1000000,
                     })
                   }
-                  className="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-sm shadow-[0_0_25px_rgba(229,168,85,0.4)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                  className="btn-sheen w-full py-3.5 rounded-full bg-gradient-to-r from-[#E07A5F] via-[#EEA862] to-[#F5C97B] text-[#241015] font-semibold text-sm shadow-md flex items-center justify-center gap-2"
                 >
                   <span>Yes, Plan This Event Now</span>
                   <ArrowRight className="w-4 h-4" />
@@ -497,7 +501,7 @@ export const FullInteractiveCalendar: React.FC<FullInteractiveCalendarProps> = (
 
                 <button
                   type="submit"
-                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white/80 hover:text-white transition-colors"
+                  className="w-full py-2.5 rounded-xl bg-surface-2 hover:bg-line/50 border border-line text-xs font-semibold text-ink-2 hover:text-ink transition-colors"
                 >
                   Save to Calendar Only
                 </button>

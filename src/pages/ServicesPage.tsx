@@ -174,40 +174,42 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onPlanEvent, onOpenC
   ];
 
   return (
-    <div className="relative min-h-screen bg-[#0D0709] text-white selection:bg-[#E5A855] selection:text-black pb-24">
+    <div className="relative min-h-screen bg-bg text-ink selection:bg-gold selection:text-bg pb-24 transition-colors duration-300">
       {/* Background Atmosphere */}
-      <div className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full bg-[#E5A855]/10 filter blur-[150px] pointer-events-none" />
-      <div className="absolute top-1/2 right-10 w-[500px] h-[500px] rounded-full bg-[#702435]/15 filter blur-[160px] pointer-events-none" />
+      <div className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full bg-gold/10 filter blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 right-10 w-[500px] h-[500px] rounded-full bg-maroon/10 filter blur-[160px] pointer-events-none" />
 
       {/* Hero Header */}
       <div className="relative pt-12 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center space-y-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E5A855]/15 border border-[#E5A855]/30 text-xs font-semibold text-[#E5A855] uppercase tracking-widest">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/15 border border-gold/30 text-xs font-semibold text-gold-ink uppercase tracking-widest">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Curated Event Services</span>
         </div>
 
-        <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
+        <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink tracking-tight leading-tight">
           Bespoke Craftsmanship for <br />
-          <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#E5A855] via-[#F5C27E] to-[#E58235]">
+          <span className="italic font-normal text-gold-ink">
             Unforgettable Celebrations
           </span>
         </h1>
 
-        <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto leading-relaxed">
-          From palace mandap architecture to gourmet culinary banquets, discover how Eventara transforms your special day into a seamless work of art.
+        <p className="text-sm sm:text-base text-ink-2 max-w-2xl mx-auto leading-relaxed">
+          From heritage mandap architecture to gourmet culinary banquets, explore service categories and planning guidance tailored to your occasion.
         </p>
 
-        <div className="pt-4 flex items-center justify-center gap-4">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
           <button
+            type="button"
             onClick={() => onPlanEvent('wedding')}
-            className="px-7 py-3 rounded-full bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white font-semibold text-xs shadow-[0_0_25px_rgba(229,168,85,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+            className="btn-sheen px-7 py-3 rounded-full bg-gradient-to-r from-[#E07A5F] via-[#EEA862] to-[#F5C97B] text-[#241015] font-semibold text-xs shadow-md flex items-center gap-2"
           >
-            <span>Inquire for Your Date</span>
+            <span>Plan for Your Date</span>
             <ArrowRight className="w-4 h-4" />
           </button>
           <button
+            type="button"
             onClick={onOpenCalendar}
-            className="px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs transition-colors"
+            className="px-6 py-3 rounded-full bg-surface-2 hover:bg-line/50 border border-line text-ink font-semibold text-xs transition-colors"
           >
             Check Auspicious Muhurats
           </button>
@@ -220,34 +222,34 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onPlanEvent, onOpenC
           {services.map((srv) => (
             <div
               key={srv.id}
-              className="p-6 sm:p-7 rounded-3xl bg-[#140B10]/90 border border-white/10 hover:border-[#E5A855]/60 transition-all duration-300 shadow-[0_10px_35px_rgba(0,0,0,0.5)] group flex flex-col justify-between"
+              className="p-6 sm:p-7 rounded-3xl eventara-editorial-card eventara-editorial-card-interactive group flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-3xl p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform">
+                  <span className="text-3xl p-3 rounded-2xl bg-surface-2 border border-line group-hover:scale-110 transition-transform">
                     {srv.icon}
                   </span>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#E5A855]/15 text-[#E5A855] border border-[#E5A855]/30">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gold/15 text-gold-ink border border-gold/30">
                     {srv.badge}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-xl font-bold text-white group-hover:text-[#E5A855] transition-colors">
+                <h3 className="font-display text-2xl font-semibold text-ink group-hover:text-gold-ink transition-colors">
                   {srv.title}
                 </h3>
 
-                <p className="text-xs text-white/60 leading-relaxed">
+                <p className="text-xs text-ink-2 leading-relaxed">
                   {srv.description}
                 </p>
 
-                <div className="space-y-2 pt-2 border-t border-white/10">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
+                <div className="space-y-2 pt-2 border-t border-line">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-2">
                     Key Deliverables:
                   </span>
                   <ul className="space-y-1.5">
                     {srv.highlights.map((h, i) => (
-                      <li key={i} className="text-xs text-white/80 flex items-start gap-2">
-                        <span className="text-[#E5A855] text-xs">✓</span>
+                      <li key={i} className="text-xs text-ink flex items-start gap-2">
+                        <span className="text-gold-ink text-xs">✓</span>
                         <span>{h}</span>
                       </li>
                     ))}
@@ -255,14 +257,15 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onPlanEvent, onOpenC
                 </div>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+              <div className="mt-6 pt-4 border-t border-line flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-white/50 block">Investment Guide</span>
-                  <span className="text-xs font-bold text-[#E5A855]">{srv.priceGuide}</span>
+                  <span className="text-[10px] text-ink-2 block">Estimated Allocation Guide</span>
+                  <span className="text-xs font-bold text-gold-ink">{srv.priceGuide}</span>
                 </div>
                 <button
+                  type="button"
                   onClick={() => onPlanEvent(srv.categoryKey)}
-                  className="px-4 py-2 rounded-full bg-white/5 hover:bg-[#E5A855] hover:text-black border border-white/15 text-xs font-semibold text-white transition-all flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-full bg-surface-2 hover:bg-gold hover:text-bg border border-line text-xs font-semibold text-ink transition-all flex items-center gap-1.5"
                 >
                   <span>Select</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -273,13 +276,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onPlanEvent, onOpenC
         </div>
 
         {/* Pricing / Packages Comparison Section */}
-        <div className="mt-20 pt-10 border-t border-white/10">
+        <div className="mt-20 pt-10 border-t border-line">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <h2 className="font-serif text-3xl font-bold text-white">
-              Signature Planning Tiers
+            <h2 className="font-display text-3xl font-semibold text-ink">
+              Sample Planning Tiers
             </h2>
-            <p className="text-xs sm:text-sm text-white/60">
-              Clear, transparent milestone fees with no agency kickbacks. You pay vendors directly.
+            <p className="text-xs sm:text-sm text-ink-2">
+              Illustrative planning tiers for budgeting reference. Always confirm final vendor availability, quotes, and contracts directly.
             </p>
           </div>
 
@@ -289,43 +292,44 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onPlanEvent, onOpenC
                 key={i}
                 className={`p-6 sm:p-8 rounded-3xl transition-all ${
                   pkg.popular
-                    ? 'bg-gradient-to-b from-[#2A151F] to-[#140B10] border-2 border-[#E5A855] shadow-[0_0_40px_rgba(229,168,85,0.3)] relative'
-                    : 'bg-[#140B10]/90 border border-white/10'
+                    ? 'eventara-editorial-card border-2 border-gold shadow-lg relative'
+                    : 'eventara-editorial-card'
                 }`}
               >
                 {pkg.popular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-gradient-to-r from-[#D97736] to-[#E5A855] text-white text-[10px] font-bold uppercase tracking-widest shadow-md">
-                    Most Requested
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-gradient-to-r from-[#D97736] to-[#E5A855] text-[#12090E] text-[10px] font-bold uppercase tracking-widest shadow-md">
+                    Popular Tier
                   </div>
                 )}
-                <h4 className="font-serif text-2xl font-bold text-white">{pkg.name}</h4>
-                <p className="text-xs text-white/60 mt-1 min-h-[36px]">{pkg.tagline}</p>
+                <h4 className="font-display text-2xl font-semibold text-ink">{pkg.name}</h4>
+                <p className="text-xs text-ink-2 mt-1 min-h-[36px]">{pkg.tagline}</p>
 
-                <div className="my-6 py-4 border-y border-white/10">
-                  <span className="text-[10px] text-white/50 uppercase tracking-widest block">Starting At</span>
-                  <span className="font-serif text-2xl sm:text-3xl font-bold text-[#E5A855]">
+                <div className="my-6 py-4 border-y border-line">
+                  <span className="text-[10px] text-ink-2 uppercase tracking-widest block">Reference Guide</span>
+                  <span className="font-display text-2xl sm:text-3xl font-bold text-gold-ink">
                     {pkg.price}
                   </span>
                 </div>
 
-                <ul className="space-y-2.5 text-xs text-white/80 mb-8">
+                <ul className="space-y-2.5 text-xs text-ink mb-8">
                   {pkg.features.map((f, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-[#E5A855] font-bold">✓</span>
+                      <span className="text-gold-ink font-bold">✓</span>
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
 
                 <button
+                  type="button"
                   onClick={() => onPlanEvent('wedding')}
                   className={`w-full py-3 rounded-full text-xs font-bold transition-all ${
                     pkg.popular
-                      ? 'bg-gradient-to-r from-[#D97736] via-[#E5A855] to-[#C87A32] text-white shadow-[0_0_20px_rgba(229,168,85,0.4)] hover:brightness-110'
-                      : 'bg-white/10 hover:bg-white/15 text-white border border-white/20'
+                      ? 'btn-sheen bg-gradient-to-r from-[#E07A5F] via-[#EEA862] to-[#F5C97B] text-[#241015] shadow-md'
+                      : 'bg-surface-2 hover:bg-line/50 text-ink border border-line'
                   }`}
                 >
-                  Book Consultation
+                  Start Planning With This Tier
                 </button>
               </div>
             ))}

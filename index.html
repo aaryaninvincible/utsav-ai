@@ -80,11 +80,24 @@
     </script>
 
     <script>
-      // Apply saved theme and festival variables before initial paint
+      // Apply saved theme and festival variables before initial paint (prevent flash)
       try {
         var t = localStorage.getItem('utsav_theme');
-        if (t === 'dark') {
+        if (t === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else if (t === 'dark') {
           document.documentElement.classList.add('dark');
+        } else {
+          // Dark mode remains the default visual style unless light mode is explicitly preferred
+          var prefersLight =
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches &&
+            !window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (prefersLight) {
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+          }
         }
         var fest = localStorage.getItem('utsav_festival_theme') || 'diwali';
         var festPrimary = {
@@ -96,7 +109,9 @@
           newyear: '#1E293B'
         }[fest] || '#7928CA';
         document.documentElement.style.setProperty('--fest-primary', festPrimary);
-      } catch (e) {}
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
     </script>
   </head>
   <body>

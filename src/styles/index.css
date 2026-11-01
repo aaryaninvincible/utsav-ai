@@ -8,43 +8,43 @@
    ========================================================================== */
 @layer base {
   :root {
-    --c-bg: 255 248 238;          /* Ivory #FFF8EE */
-    --c-surface: 255 253 249;
-    --c-surface-2: 250 239 227;   /* warm peach-ivory */
-    --c-line: 233 219 202;
-    --c-ink: 53 34 31;            /* #35221F */
-    --c-ink-2: 120 102 92;        /* #78665C */
-    --c-primary: 84 25 37;        /* Deep maroon #541925 */
-    --c-on-primary: 255 248 238;
-    --c-maroon: 84 25 37;
+    --c-bg: 255 248 242;          /* Warm luxury editorial ivory #FFF8F2 */
+    --c-surface: 255 253 249;     /* #FFFDF9 */
+    --c-surface-2: 247 233 223;   /* Secondary surface #F7E9DF */
+    --c-line: 230 212 198;        /* Warm hairline border */
+    --c-ink: 42 26 32;            /* Deep espresso-burgundy ink #2A1A20 */
+    --c-ink-2: 112 93 98;         /* Muted ink #705D62 */
+    --c-primary: 87 27 50;        /* Editorial burgundy #571B32 */
+    --c-on-primary: 255 248 242;
+    --c-maroon: 87 27 50;         /* #571B32 */
     --c-burgundy: 112 36 53;      /* #702435 */
-    --c-gold: 197 154 83;         /* Antique gold #C59A53 — accents/borders only */
-    --c-gold-ink: 133 94 36;      /* Text-safe gold (≥4.5:1 on ivory) */
-    --c-saffron: 230 154 55;      /* #E69A37 */
+    --c-gold: 183 122 43;         /* Champagne gold #B77A2B */
+    --c-gold-ink: 148 94 26;      /* Accessible text-safe gold on ivory */
+    --c-saffron: 217 130 54;      /* Warm amber accent */
     --c-peach: 243 224 208;       /* #F3E0D0 */
-    --c-rose: 201 143 145;        /* #C98F91 */
+    --c-rose: 201 87 112;         /* Coral #C95770 */
     --c-forest: 49 88 71;         /* #315847 */
     --c-danger: 166 47 47;
-    --c-shadow: 84 40 30;
+    --c-shadow: 72 34 42;
     color-scheme: light;
   }
 
   .dark {
-    --c-bg: 26 15 16;
-    --c-surface: 37 23 24;
-    --c-surface-2: 48 30 31;
-    --c-line: 79 56 51;
-    --c-ink: 247 237 223;
-    --c-ink-2: 199 181 165;
-    --c-primary: 214 175 108;     /* Gold becomes the primary action in dark */
-    --c-on-primary: 38 18 19;
+    --c-bg: 18 9 14;              /* Deep burgundy-charcoal #12090E */
+    --c-surface: 27 14 21;        /* #1B0E15 */
+    --c-surface-2: 38 18 26;      /* Rich wine #26121A */
+    --c-line: 78 51 61;
+    --c-ink: 247 238 233;         /* Main text #F7EEE9 */
+    --c-ink-2: 206 190 184;       /* Muted text */
+    --c-primary: 241 194 125;     /* Champagne #F1C27D */
+    --c-on-primary: 34 16 21;
     --c-maroon: 112 36 53;
     --c-burgundy: 140 52 70;
-    --c-gold: 205 165 98;
-    --c-gold-ink: 224 189 128;
-    --c-saffron: 236 168 79;
+    --c-gold: 241 194 125;        /* Champagne #F1C27D */
+    --c-gold-ink: 241 194 125;
+    --c-saffron: 242 166 74;      /* Glow gold #F2A64A */
     --c-peach: 84 54 46;
-    --c-rose: 214 160 162;
+    --c-rose: 215 92 117;         /* Coral #D75C75 */
     --c-forest: 120 176 148;
     --c-danger: 236 120 110;
     --c-shadow: 0 0 0;
@@ -57,7 +57,7 @@
   }
 
   body {
-    @apply bg-bg text-ink font-sans antialiased;
+    @apply bg-bg text-ink font-sans antialiased transition-colors duration-300;
     overflow-x: hidden;
     font-feature-settings: 'ss01', 'cv11';
   }
@@ -237,9 +237,18 @@
 
   /* ---------------- Eventara Editorial Glass & Luxury Surfaces ---------------- */
   .eventara-nav-glass {
+    background: rgba(255, 251, 246, 0.86);
+    backdrop-filter: blur(24px) saturate(145%);
+    -webkit-backdrop-filter: blur(24px) saturate(145%);
+    border: 1px solid rgba(183, 122, 43, 0.24);
+    box-shadow:
+      0 14px 36px -12px rgba(87, 27, 50, 0.12),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+    transition: background-color 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  }
+
+  .dark .eventara-nav-glass {
     background: rgba(30, 16, 22, 0.76);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
     border: 1px solid rgba(247, 238, 233, 0.14);
     box-shadow:
       0 18px 42px -12px rgba(0, 0, 0, 0.72),
@@ -249,12 +258,26 @@
   .eventara-feature-strip {
     background: linear-gradient(
       90deg,
+      rgba(255, 252, 248, 0.9) 0%,
+      rgba(250, 239, 230, 0.88) 50%,
+      rgba(255, 252, 248, 0.9) 100%
+    );
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid rgba(183, 122, 43, 0.25);
+    box-shadow:
+      0 18px 44px -16px rgba(87, 27, 50, 0.14),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+    transition: background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  }
+
+  .dark .eventara-feature-strip {
+    background: linear-gradient(
+      90deg,
       rgba(56, 32, 42, 0.68) 0%,
       rgba(44, 25, 34, 0.64) 50%,
       rgba(62, 38, 44, 0.68) 100%
     );
-    backdrop-filter: blur(24px) saturate(140%);
-    -webkit-backdrop-filter: blur(24px) saturate(140%);
     border: 1px solid rgba(247, 238, 233, 0.16);
     box-shadow:
       0 20px 50px -15px rgba(0, 0, 0, 0.75),
@@ -265,15 +288,15 @@
   .eventara-category-card {
     background: linear-gradient(
       160deg,
-      rgba(56, 34, 43, 0.56) 0%,
-      rgba(34, 20, 27, 0.62) 100%
+      rgba(255, 252, 248, 0.86) 0%,
+      rgba(247, 233, 223, 0.76) 100%
     );
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(247, 238, 233, 0.13);
+    border: 1px solid rgba(183, 122, 43, 0.22);
     box-shadow:
-      0 14px 32px -12px rgba(0, 0, 0, 0.65),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+      0 10px 26px -12px rgba(87, 27, 50, 0.12),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
     transition:
       transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
       border-color 240ms ease,
@@ -281,10 +304,32 @@
       background 240ms ease;
   }
 
+  .dark .eventara-category-card {
+    background: linear-gradient(
+      160deg,
+      rgba(56, 34, 43, 0.56) 0%,
+      rgba(34, 20, 27, 0.62) 100%
+    );
+    border: 1px solid rgba(247, 238, 233, 0.13);
+    box-shadow:
+      0 14px 32px -12px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+
   .eventara-category-card:hover,
   .eventara-category-card:focus-visible {
-    transform: translateY(-3px);
-    border-color: rgba(241, 194, 125, 0.45);
+    transform: translateY(-5px);
+    border-color: rgba(183, 122, 43, 0.55);
+    box-shadow:
+      0 16px 34px -10px rgba(87, 27, 50, 0.18),
+      0 0 20px -6px rgba(183, 122, 43, 0.22),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .dark .eventara-category-card:hover,
+  .dark .eventara-category-card:focus-visible {
+    transform: translateY(-5px);
+    border-color: rgba(241, 194, 125, 0.48);
     box-shadow:
       0 18px 36px -10px rgba(0, 0, 0, 0.75),
       0 0 22px -6px rgba(242, 166, 74, 0.25),
@@ -292,6 +337,20 @@
   }
 
   .eventara-category-card-active {
+    background: linear-gradient(
+      145deg,
+      rgba(253, 236, 222, 0.95) 0%,
+      rgba(247, 221, 208, 0.9) 55%,
+      rgba(251, 232, 224, 0.94) 100%
+    );
+    border: 1px solid rgba(183, 122, 43, 0.68);
+    box-shadow:
+      0 16px 34px -10px rgba(87, 27, 50, 0.2),
+      0 -2px 18px -6px rgba(183, 122, 43, 0.28),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .dark .eventara-category-card-active {
     background: linear-gradient(
       145deg,
       rgba(148, 82, 68, 0.55) 0%,
@@ -304,6 +363,113 @@
       0 -4px 24px -6px rgba(242, 166, 74, 0.42),
       0 6px 26px -8px rgba(215, 92, 117, 0.38),
       inset 0 1px 1px 0 rgba(255, 232, 198, 0.45);
+  }
+
+  .eventara-editorial-card {
+    background: rgba(255, 253, 249, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(183, 122, 43, 0.2);
+    box-shadow:
+      0 12px 32px -14px rgba(87, 27, 50, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+    transition:
+      transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 260ms ease,
+      box-shadow 260ms ease,
+      background-color 260ms ease;
+  }
+
+  .dark .eventara-editorial-card {
+    background: rgba(34, 18, 26, 0.64);
+    border: 1px solid rgba(247, 238, 233, 0.12);
+    box-shadow:
+      0 16px 38px -14px rgba(0, 0, 0, 0.68),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .eventara-editorial-card-interactive:hover,
+  .eventara-editorial-card-interactive:focus-visible {
+    transform: translateY(-5px);
+    border-color: rgba(183, 122, 43, 0.5);
+    box-shadow:
+      0 18px 38px -12px rgba(87, 27, 50, 0.16),
+      0 0 20px -8px rgba(183, 122, 43, 0.22);
+  }
+
+  .dark .eventara-editorial-card-interactive:hover,
+  .dark .eventara-editorial-card-interactive:focus-visible {
+    transform: translateY(-5px);
+    border-color: rgba(241, 194, 125, 0.45);
+    box-shadow:
+      0 20px 42px -12px rgba(0, 0, 0, 0.78),
+      0 0 24px -8px rgba(242, 166, 74, 0.22);
+  }
+
+  /* Primary Button Subtle Highlight Sheen & Lift */
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 220ms ease,
+      filter 220ms ease;
+  }
+
+  .btn-sheen::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.32),
+      transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 600ms ease;
+    pointer-events: none;
+  }
+
+  .btn-sheen:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-sheen:hover::after {
+    left: 140%;
+  }
+
+  /* Decorative Hero Crescent Arc Subtle Pulse/Draw */
+  .hero-arc-animate {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 0;
+    animation: arcSoftPulse 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes arcSoftPulse {
+    0% {
+      opacity: 0.78;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Staggered Viewport Reveal */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 560ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .ambient-mesh-utsav {
@@ -401,6 +567,18 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .reveal-up {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .btn-sheen::after {
+    display: none !important;
+  }
+  .eventara-category-card:hover,
+  .eventara-editorial-card-interactive:hover,
+  .btn-sheen:hover {
+    transform: none !important;
   }
 }
 

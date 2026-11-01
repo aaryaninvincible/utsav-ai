@@ -30,10 +30,48 @@ export const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
+  // Theme State ('dark' default, respects saved preference or OS light preference)
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const saved = localStorage.getItem('utsav_theme');
+      if (saved === 'light' || saved === 'dark') {
+        return saved;
+      }
+      if (
+        typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: light)').matches &&
+        !window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        return 'light';
+      }
+    } catch {}
+    return 'dark';
+  });
+
   // Modals
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [aiAssistantPrompt, setAiAssistantPrompt] = useState<string>('');
+
+  // Sync theme class with document.documentElement
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      try {
+        localStorage.setItem('utsav_theme', next);
+      } catch {}
+      return next;
+    });
+  };
 
   // Initial load
   useEffect(() => {
@@ -51,9 +89,6 @@ export const App: React.FC = () => {
         setCurrentUser(JSON.parse(savedUser));
       }
     } catch {}
-
-    // Apply dark luxury theme as default (as shown in reference image)
-    document.documentElement.classList.add('dark');
   }, []);
 
   const refreshEvents = () => {
@@ -165,7 +200,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#12090E] text-[#F7EEE9] flex flex-col font-sans selection:bg-[#F1C27D] selection:text-[#12090E]">
+    <div className="min-h-screen bg-bg text-ink flex flex-col font-sans transition-colors duration-300 selection:bg-gold selection:text-bg">
       
       {/* Luxury Navbar (Eventara Event Planner Style) */}
       <Navbar
@@ -183,6 +218,8 @@ export const App: React.FC = () => {
           setCurrentUser(null);
           localStorage.removeItem('utsav_user');
         }}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Content Area */}
@@ -195,6 +232,7 @@ export const App: React.FC = () => {
             }}
             onExploreDemo={(id) => handleSelectEvent(id || events[0]?.id || 'sample-wedding-1')}
             onOpenInspiration={() => handleNavigate('inspiration')}
+            onOpenServices={() => handleNavigate('services')}
             onOpenCalendar={scrollToCalendar}
             onPlanEventFromCalendar={handlePlanEventFromCalendar}
             onOpenAIAssistant={handleOpenAIWithPrompt}
