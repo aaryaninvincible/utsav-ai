@@ -40,14 +40,7 @@ interface NavbarProps {
   onToggleTheme?: () => void;
 }
 
-export type NavItemKey =
-  | 'home'
-  | 'aiPlanner'
-  | 'events'
-  | 'tools'
-  | 'vendors'
-  | 'templates'
-  | 'community';
+export type NavItemKey = 'home' | 'events' | 'services' | 'gallery' | 'about';
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentTab,
@@ -63,10 +56,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [eventsDropdownOpen, setEventsDropdownOpen] = useState(false);
-  const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const [landingAnchor, setLandingAnchor] = useState<'home' | 'events' | 'community' | 'about'>('home');
+  const [landingAnchor, setLandingAnchor] = useState<'home' | 'events' | 'about'>('home');
   const [hoveredKey, setHoveredKey] = useState<NavItemKey | null>(null);
   const [pillStyle, setPillStyle] = useState<{ left: number; width: number; opacity: number }>({
     left: 0,
@@ -77,23 +69,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navRef = useRef<HTMLElement | null>(null);
   const itemRefs = useRef<Record<NavItemKey, HTMLElement | null>>({
     home: null,
-    aiPlanner: null,
     events: null,
-    tools: null,
-    vendors: null,
-    templates: null,
-    community: null,
+    services: null,
+    gallery: null,
+    about: null,
   });
 
   const isDark = theme === 'dark';
 
   // Determine which nav item is active based on currentTab & landing anchor
   const activeKey: NavItemKey = (() => {
-    if (currentTab === 'services') return 'vendors';
-    if (currentTab === 'inspiration') return 'templates';
-    if (currentTab === 'dashboard') return 'tools';
-    if (currentTab === 'create' || currentTab === 'details') return 'events';
-    if (landingAnchor === 'community') return 'community';
+    if (currentTab === 'services') return 'services';
+    if (currentTab === 'inspiration') return 'gallery';
+    if (currentTab === 'create' || currentTab === 'details' || currentTab === 'dashboard') return 'events';
+    if (landingAnchor === 'about') return 'about';
     if (landingAnchor === 'events') return 'events';
     return 'home';
   })();
@@ -138,7 +127,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
   }, [updatePillPosition]);
 
-  const scrollToSection = (sectionId: string, anchorKey: 'home' | 'events' | 'community' | 'about') => {
+  const scrollToSection = (sectionId: string, anchorKey: 'home' | 'events' | 'about') => {
     setLandingAnchor(anchorKey);
     if (currentTab !== 'landing') {
       onNavigate('landing');
@@ -218,7 +207,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           onMouseLeave={() => {
             setHoveredKey(null);
             setEventsDropdownOpen(false);
-            setToolsDropdownOpen(false);
           }}
           className="relative hidden lg:flex items-center gap-1 xl:gap-1.5 py-1"
           aria-label="Primary Navigation"
@@ -243,7 +231,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             onMouseEnter={() => {
               setHoveredKey('home');
               setEventsDropdownOpen(false);
-              setToolsDropdownOpen(false);
             }}
             onFocus={() => setHoveredKey('home')}
             onBlur={() => setHoveredKey(null)}
@@ -252,36 +239,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               onNavigate('landing');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`relative z-10 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('home')}`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('home')}`}
           >
             Home
           </button>
 
-          {/* 2. AI Planner ✨ */}
-          <button
-            ref={(el) => {
-              itemRefs.current.aiPlanner = el;
-            }}
-            type="button"
-            onMouseEnter={() => {
-              setHoveredKey('aiPlanner');
-              setEventsDropdownOpen(false);
-              setToolsDropdownOpen(false);
-            }}
-            onFocus={() => setHoveredKey('aiPlanner')}
-            onBlur={() => setHoveredKey(null)}
-            onClick={() => {
-              if (onOpenAIAssistant) {
-                onOpenAIAssistant('Help me plan my event with ideas, budget, timeline, and vendor checklists.');
-              }
-            }}
-            className={`relative z-10 flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('aiPlanner')}`}
-          >
-            <span>AI Planner</span>
-            <Sparkles className="w-3.5 h-3.5 text-gold" />
-          </button>
-
-          {/* 3. Events ⌄ */}
+          {/* 2. Events ⌄ */}
           <div
             ref={(el) => {
               itemRefs.current.events = el;
@@ -290,7 +253,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             onMouseEnter={() => {
               setHoveredKey('events');
               setEventsDropdownOpen(true);
-              setToolsDropdownOpen(false);
             }}
           >
             <button
@@ -303,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }}
               aria-expanded={eventsDropdownOpen}
               aria-haspopup="true"
-              className={`flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('events')}`}
+              className={`flex items-center gap-1.5 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('events')}`}
             >
               <span>Events</span>
               <ChevronDown className="w-3.5 h-3.5 opacity-80" />
@@ -369,137 +331,58 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* 4. Tools ⌄ */}
-          <div
-            ref={(el) => {
-              itemRefs.current.tools = el;
-            }}
-            className="relative z-10"
-            onMouseEnter={() => {
-              setHoveredKey('tools');
-              setToolsDropdownOpen(true);
-              setEventsDropdownOpen(false);
-            }}
-          >
-            <button
-              type="button"
-              onFocus={() => setHoveredKey('tools')}
-              onBlur={() => setHoveredKey(null)}
-              onClick={() => {
-                setToolsDropdownOpen((prev) => !prev);
-              }}
-              aria-expanded={toolsDropdownOpen}
-              aria-haspopup="true"
-              className={`flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('tools')}`}
-            >
-              <span>Tools</span>
-              <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-            </button>
-
-            {toolsDropdownOpen && (
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2.5 w-64 z-50">
-                <div className="rounded-2xl p-2 bg-surface/95 dark:bg-[#1B0E14]/95 backdrop-blur-2xl border border-line shadow-2xl space-y-0.5">
-                  <div className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gold-ink">
-                    Planning Toolkit
-                  </div>
-                  {[
-                    { label: 'Budget Planner & Allocator', icon: Wallet, tab: 'dashboard' },
-                    { label: 'Timeline & Milestone Schedule', icon: Clock, tab: 'dashboard' },
-                    { label: 'Vendor Directory & Quotations', icon: Users, tab: 'services' },
-                    { label: 'Checklist & Task Manager', icon: CheckSquare, tab: 'dashboard' },
-                    { label: 'Guest List & RSVP Manager', icon: Users, tab: 'dashboard' },
-                  ].map((tool) => {
-                    const Icon = tool.icon;
-                    return (
-                      <button
-                        key={tool.label}
-                        type="button"
-                        onClick={() => {
-                          onNavigate(tool.tab);
-                          setToolsDropdownOpen(false);
-                        }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-ink hover:text-gold hover:bg-surface-2/70 flex items-center justify-between transition-colors"
-                      >
-                        <span>{tool.label}</span>
-                        <Icon className="w-3.5 h-3.5 text-gold" />
-                      </button>
-                    );
-                  })}
-                  <div className="border-t border-line my-1 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (onOpenAIAssistant) {
-                          onOpenAIAssistant('Generate custom theme concepts, mood boards, and decor palettes for my event.');
-                        }
-                        setToolsDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-gold-ink hover:bg-surface-2/70 flex items-center justify-between transition-colors"
-                    >
-                      <span>AI Ideas & Themes Generator</span>
-                      <Sparkles className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* 5. Vendors */}
+          {/* 3. Services */}
           <button
             ref={(el) => {
-              itemRefs.current.vendors = el;
+              itemRefs.current.services = el;
             }}
             type="button"
             onMouseEnter={() => {
-              setHoveredKey('vendors');
+              setHoveredKey('services');
               setEventsDropdownOpen(false);
-              setToolsDropdownOpen(false);
             }}
-            onFocus={() => setHoveredKey('vendors')}
+            onFocus={() => setHoveredKey('services')}
             onBlur={() => setHoveredKey(null)}
             onClick={() => onNavigate('services')}
-            className={`relative z-10 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('vendors')}`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('services')}`}
           >
-            Vendors
+            Services
           </button>
 
-          {/* 6. Templates */}
+          {/* 4. Gallery */}
           <button
             ref={(el) => {
-              itemRefs.current.templates = el;
+              itemRefs.current.gallery = el;
             }}
             type="button"
             onMouseEnter={() => {
-              setHoveredKey('templates');
+              setHoveredKey('gallery');
               setEventsDropdownOpen(false);
-              setToolsDropdownOpen(false);
             }}
-            onFocus={() => setHoveredKey('templates')}
+            onFocus={() => setHoveredKey('gallery')}
             onBlur={() => setHoveredKey(null)}
             onClick={() => onNavigate('inspiration')}
-            className={`relative z-10 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('templates')}`}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('gallery')}`}
           >
-            Templates
+            Gallery
           </button>
 
-          {/* 7. Community */}
+          {/* 5. About */}
           <button
             ref={(el) => {
-              itemRefs.current.community = el;
+              itemRefs.current.about = el;
             }}
             type="button"
             onMouseEnter={() => {
-              setHoveredKey('community');
+              setHoveredKey('about');
               setEventsDropdownOpen(false);
-              setToolsDropdownOpen(false);
             }}
-            onFocus={() => setHoveredKey('community')}
+            onFocus={() => setHoveredKey('about')}
             onBlur={() => setHoveredKey(null)}
-            onClick={() => scrollToSection('community-section', 'community')}
-            className={`relative z-10 px-3.5 xl:px-4 py-1.5 rounded-full text-[13px] xl:text-[13.5px] transition-colors duration-200 ${getItemTextClass('community')}`}
+            onClick={() => scrollToSection('how-it-works', 'about')}
+            className={`relative z-10 px-4 xl:px-5 py-1.5 rounded-full text-[13.5px] transition-colors duration-200 ${getItemTextClass('about')}`}
           >
-            Community
+            About
           </button>
         </nav>
 
@@ -736,12 +619,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="lg:hidden mt-2.5 max-w-md mx-auto rounded-3xl border border-line bg-surface/95 dark:bg-[#160B11]/95 backdrop-blur-2xl p-5 space-y-2 shadow-2xl pointer-events-auto">
           {[
             { key: 'home', label: 'Home', action: () => { setLandingAnchor('home'); onNavigate('landing'); } },
-            { key: 'aiPlanner', label: 'AI Planner ✨', action: () => { if (onOpenAIAssistant) onOpenAIAssistant(); } },
             { key: 'events', label: 'Events', action: () => scrollToSection('event-categories', 'events') },
-            { key: 'tools', label: 'Tools', action: () => onNavigate('dashboard') },
-            { key: 'vendors', label: 'Vendors', action: () => onNavigate('services') },
-            { key: 'templates', label: 'Templates', action: () => onNavigate('inspiration') },
-            { key: 'community', label: 'Community', action: () => scrollToSection('community-section', 'community') },
+            { key: 'services', label: 'Services', action: () => onNavigate('services') },
+            { key: 'gallery', label: 'Gallery', action: () => onNavigate('inspiration') },
+            { key: 'about', label: 'About', action: () => scrollToSection('how-it-works', 'about') },
           ].map((item) => (
             <button
               key={item.key}
