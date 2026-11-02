@@ -1101,6 +1101,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             SECTION C: “Made for every celebration” Editorial Split Showcase
             ======================================================================= */}
         <section
+          id="community-section"
           aria-labelledby="every-celebration-heading"
           className="reveal-up grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
         >
