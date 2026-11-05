@@ -8,6 +8,14 @@
 
 ---
 
+## 📸 Live Platform Interface Preview
+
+<p align="center">
+  <img src="screenshot.png" width="90%" alt="Eventara Celebration Planning Platform Preview" />
+</p>
+
+---
+
 ## Overview
 
 **Eventara** is an editorial celebration and event-planning web application designed to help hosts plan, organize, and manage unforgettable occasions — from royal heritage weddings and milestone birthdays to college festivals, cultural gatherings, and corporate galas.
